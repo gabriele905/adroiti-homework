@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from backend.anagram_searcher.models import Word
+from backend.anagram_searcher.serializers import AnagramSerializer
 
 
 class WordsApiView(APIView):
@@ -30,4 +31,10 @@ class AnagramApiView(APIView):
     def get(self, request, word, format=None):
         limit = int(request.query_params.get('limit', Word.objects.all().count()))
 
-        return Response({"anagrams": Word.objects.filter(canonical_form=''.join(sorted(word))).exclude(word=word).values_list('word', flat=True)[0:limit]})
+        return Response(
+            AnagramSerializer(
+                Word.objects.filter(
+                    canonical_form=''.join(sorted(word))
+                ).exclude(word=word).values_list('word', flat=True)[:limit]
+            ).data
+        )
