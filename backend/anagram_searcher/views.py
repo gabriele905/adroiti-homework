@@ -66,34 +66,6 @@ class CorpusStatsView(APIView):
         }
         return Response(stats, status=status.HTTP_200_OK)
 
-    # def get(self, request, format=None):
-    #     count_data = {}
-    #     total = 0
-    #     total_letters = 0
-    #     median_ = []
-    #
-    #     for word in Word.objects.all():
-    #         length = len(word.word)
-    #
-    #         if length not in count_data.keys():
-    #             count_data[length] = 0
-    #
-    #         count_data[length] += 1
-    #         total += 1
-    #         total_letters += length
-    #         median_.append(length)
-    #
-    #     data = {
-    #         'total': Word.objects.all().count(),
-    #         'min': min(count_data.keys()),
-    #         'max': max(count_data.keys()),
-    #         'average': total_letters / total,
-    #         'median': statistics.median(median_),
-    #         'count_data': count_data
-    #     }
-    #
-    #     return Response(data)data
-
 
 class MostAnagramsView(APIView):
     def get(self, request):
