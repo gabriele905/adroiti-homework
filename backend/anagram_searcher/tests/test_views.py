@@ -211,4 +211,3 @@ class DeleteWordViewTestCase(TestCase):
 
         self.assertEqual(1, Word.objects.all().count())
         self.assertEqual(0, Word.objects.filter(canonical_form=anagram).count())
-
