@@ -1,10 +1,18 @@
 # homework assignment by Gabrielė Dumbliauskė
 
+Django API designed to perform various operations related to anagrams: 
+search for anagrams, retrieve corpus statistics, and perform other anagram-related tasks. 
+
 ### Initialize virtual environment:
 ```
 python3 -m venv venv
 pip install -r requirements.txt
 source venv/bin/activate
+```
+
+### Django command to load words from file:
+```
+python3 manage.py load_words_from_file
 ```
 
 ### To run application:
