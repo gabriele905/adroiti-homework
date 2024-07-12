@@ -24,6 +24,12 @@ urlpatterns = [
     path('words/', WordsView.as_view()),
     path('words/<str:word>/', WordsDetailView.as_view()),
     path('anagrams/<str:word>/', AnagramView.as_view()),
+    path('corpus_stats/', CorpusStatsView.as_view()),
+    path('most_anagrams/', MostAnagramsView.as_view()),
+    path('check_anagrams/', CheckAnagramsView.as_view()),
+    path('anagram_group/<int:size>/', AnagramGroupView.as_view()),
+    path('delete_word/<str:word>/', DeleteWordView.as_view()),
+    path('admin/', admin.site.urls),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
