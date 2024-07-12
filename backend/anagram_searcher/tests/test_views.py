@@ -62,11 +62,17 @@ class AnagramViewTestCase(TestCase):
 
         self.word_read = Word.objects.create(word='read', canonical_form='ader')
         self.word_dare = Word.objects.create(word='dare', canonical_form='ader')
-        self.word_dear = Word.objects.create(word='dear', canonical_form='ader')
+        self.word_dear = Word.objects.create(word='Dear', canonical_form='ader')
         self.word_book = Word.objects.create(word='book', canonical_form='bkoo')
 
-    def test_get_anagram_founds_two_anagram(self):
+    def test_get_anagram_founds_one_anagram_include_proper_nouns_false_by_default(self):
         response = self.client.get(f'/anagrams/{self.word_read.word}/')
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertIn(self.word_dare.word, response.data['anagrams'])
+
+    def test_get_anagram_founds_one_anagram_include_proper_nouns_true(self):
+        response = self.client.get(f'/anagrams/{self.word_read.word}/?include_proper_nouns=true')
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertIn(self.word_dare.word, response.data['anagrams'])
