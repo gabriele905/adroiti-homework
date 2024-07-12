@@ -11,6 +11,6 @@ class Word(models.Model):
             return
 
         Word.objects.bulk_create(
-            [Word(word=word, canonical_form=''.join(sorted(word))) for word in words],
+            [Word(word=word, canonical_form=''.join(sorted(word)).lower()) for word in words],
             ignore_conflicts=True
         )
