@@ -1,4 +1,39 @@
-# adroiti-homework
+# homework assignment by Gabrielė Dumbliauskė
+
+### Initialize virtual environment:
+```
+python3 -m venv venv
+pip install -r requirements.txt
+source venv/bin/activate
+```
+
+### To run application:
+```
+python3 manage.py runserver 8000
+```
+
+Django app will be hosted on `127.0.0.1:8000`.
+
+### To run tests:
+```
+python3 manage.py test
+```
+
+## Endpoints:
+
+- `POST /words`: Adds words to the corpus.
+- `GET /anagrams/{word}?limit={limit}&include_proper_nouns=true`: Returns anagrams of word with limit and include_proper_nouns query parameters.
+- `DELETE /words/{word}`: Deletes word from data store.
+- `DELETE /words/`: Deletes all words from data store.
+
+## Additional endpoints
+
+- `GET /corpus_stats/`: Returns a count of words in the corpus and min/max/median/average word length.
+- `GET /most_anagrams/`: Returns words with the most anagrams.
+- `POST /check_anagrams/`: Takes a set of words and returns whether they are all anagrams of each other.
+- `POST /anagram_group/{size}/`: Returns all anagram groups of size >= *size*.
+- `DELETE /delete_word/{word}/`: Deletes word and all its anagrams.
+
 
 Signal Backend Dev Project
 =========
