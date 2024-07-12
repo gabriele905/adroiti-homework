@@ -1,4 +1,4 @@
-from django.db.models import Count, Min, Max, Avg
+from django.db.models import Count, Min, Max, Avg, Q
 from django.db.models.functions import Length
 from rest_framework import status
 from rest_framework.response import Response
@@ -35,13 +35,15 @@ class WordsDetailView(APIView):
 class AnagramView(APIView):
     def get(self, request, word, format=None):
         limit = int(request.query_params.get('limit', Word.objects.all().count()))
+        include_proper_nouns = request.query_params.get('include_proper_nouns', 'false').lower() == 'true'
+
+        f = Q(canonical_form=''.join(sorted(word)))
+
+        if not include_proper_nouns:
+            f &= Q(word__regex=r'^[a-z]+$')
 
         return Response(
-            AnagramSerializer(
-                Word.objects.filter(
-                    canonical_form=''.join(sorted(word))
-                ).exclude(word=word).values_list('word', flat=True)[:limit]
-            ).data
+            AnagramSerializer(Word.objects.filter(f).exclude(word=word).values_list('word', flat=True)[:limit]).data
         )
 
 
