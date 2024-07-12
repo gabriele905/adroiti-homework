@@ -18,13 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from backend.anagram_searcher.views import WordsApiView, WordsDetailApiView, AnagramApiView
+from backend.anagram_searcher.views import *
 
 urlpatterns = [
-    path('words/', WordsApiView.as_view()),
-    path('words/<str:word>/', WordsDetailApiView.as_view()),
-    path('anagrams/<str:word>/', AnagramApiView.as_view()),
-    path('admin/', admin.site.urls),
+    path('words/', WordsView.as_view()),
+    path('words/<str:word>/', WordsDetailView.as_view()),
+    path('anagrams/<str:word>/', AnagramView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

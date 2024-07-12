@@ -6,7 +6,7 @@ from rest_framework.test import APIClient
 from backend.anagram_searcher.models import Word
 
 
-class WordsApiViewTestCase(TestCase):
+class WordsViewTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
 
@@ -23,6 +23,15 @@ class WordsApiViewTestCase(TestCase):
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(3, Word.objects.all().count())
 
+    def test_create_words_no_words_passed(self):
+        data = {
+            'words': []
+        }
+        response = self.client.post('/words/', data, format='json')
+
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual('No words provided', response.data['error'])
+
     def test_delete_all_words(self):
         self.assertEqual(1, Word.objects.all().count())
 
@@ -32,7 +41,7 @@ class WordsApiViewTestCase(TestCase):
         self.assertEqual(0, Word.objects.all().count())
 
 
-class WordsDetailApiViewTestCase(TestCase):
+class WordsDetailViewTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
 
@@ -47,7 +56,7 @@ class WordsDetailApiViewTestCase(TestCase):
         self.assertEqual(0, Word.objects.all().count())
 
 
-class AnagramApiViewTestCase(TestCase):
+class AnagramViewTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
 
