@@ -56,8 +56,17 @@ class CorpusStatsView(APIView):
             average_length=Avg(Length('word'))
         )
         word_lengths = list(Word.objects.annotate(length=Length('word')).values_list('length', flat=True))
-        word_lengths.sort()
-        median_length = word_lengths[len(word_lengths) // 2] if word_lengths else 0
+
+        if not word_lengths:
+            median_length = 0
+        else:
+            word_lengths.sort()
+            mid_index = len(word_lengths) // 2
+
+            if len(word_lengths) % 2 != 0:
+                median_length = word_lengths[mid_index]
+            else:
+                median_length = (word_lengths[mid_index - 1] + word_lengths[mid_index]) / 2
 
         stats = {
             'total_words': total_words,
