@@ -108,6 +108,19 @@ class CorpusStatsViewTestCase(TestCase):
         self.assertEqual(8 / 3, response.data['average_length'])
         self.assertEqual(3, response.data['median_length'])
 
+    def test_get_corpus_stats_median_of_four(self):
+        Word.objects.create(word='in', canonical_form='in')
+
+        response = self.client.get('/corpus_stats/')
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+
+        self.assertEqual(4, response.data['total_words'])
+        self.assertEqual(1, response.data['min_length'])
+        self.assertEqual(4, response.data['max_length'])
+        self.assertEqual(10 / 4, response.data['average_length'])
+        self.assertEqual(2.5, response.data['median_length'])
+
 
 class MostAnagramsViewTestCase(TestCase):
     def setUp(self):
